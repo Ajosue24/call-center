@@ -2,6 +2,7 @@ package com.almundo.callcenter.controller;
 
 
 import com.almundo.callcenter.component.Dispatcher;
+import com.almundo.callcenter.response.Response;
 import com.almundo.callcenter.service.AsynchronousService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,13 +41,13 @@ public class TestController {
      * @return OK
      */
     @GetMapping
-    public String executeAsync() {
+    public Response executeAsync() {
         LOG.debug("inicio metodo executeAsync");
         for (int i = 0; i < 10; i++) {
             asynchronousService.executeAsynchronously();
         }
         LOG.debug("fin metodo executeAsync");
-        return "OK";
+        return new Response("OK con 10 llamadas",Boolean.TRUE) ;
     }
 
     /**
@@ -56,7 +57,7 @@ public class TestController {
      * @return OK
      */
     @GetMapping(value = "/{id}")
-    public String executeAsyncMultipleId(@PathVariable("id") Integer id) {
+    public Response executeAsyncMultipleId(@PathVariable("id") Integer id) {
         LOG.debug("inicio metodo executeAsyncMultipleId");
         for (int i = 0; i < id; i++) {
             Integer p = new Random().ints(5, 11).findFirst().getAsInt();
@@ -64,6 +65,6 @@ public class TestController {
         }
 
         LOG.debug("fin metodo executeAsyncMultipleId");
-        return "OK Whith " + id + " calls";
+        return new Response("OK Whith " + id + " calls",Boolean.TRUE);
     }
 }

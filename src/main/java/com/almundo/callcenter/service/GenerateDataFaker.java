@@ -58,8 +58,8 @@ public class GenerateDataFaker {
      */
     public void seedUsers() {
         LOG.debug("inicio metodo seedUsers");
-        int cantOperator = 5;
-        int cantSupervisor = 3;
+        int cantOperator = 6;
+        int cantSupervisor = 2;
         int cantDirector = 2;
 
         for (int i = 0; i < this.rolesList.size(); i++) {

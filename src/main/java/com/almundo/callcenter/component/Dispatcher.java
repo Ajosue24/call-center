@@ -40,6 +40,11 @@ public class Dispatcher {
      */
     private static final Logger LOG = LoggerFactory.getLogger(Dispatcher.class);
 
+    /**
+     * Usuario temp
+     */
+    private Users user;
+
 
     /**
      * Metodo que valida los operadores disponibles
@@ -63,23 +68,24 @@ public class Dispatcher {
                     usersList = generateDataFaker.getEmployees("DIRECTOR");
                     usersList.removeAll(progressCall);
                     if(usersList.isEmpty()){
-                        Users user = usersList.get(new Random().ints(0, usersList.size()).findFirst().getAsInt());
+                        LOG.debug("Fin metodo validateOperatorsAvailable");
+                        return null;
+                    }else {
+                        Users user = getUserRandom();
                         progressCall.add(user);
                         LOG.debug("Fin metodo validateOperatorsAvailable");
                         return user;
-                    }else {
-                        LOG.debug("Fin metodo validateOperatorsAvailable");
-                        return null;
+
                     }
                 }else{
-                    Users user = usersList.get(new Random().ints(0, usersList.size()).findFirst().getAsInt());
+                    Users user = getUserRandom();
                     progressCall.add(user);
                     LOG.debug("Fin metodo validateOperatorsAvailable");
                     return user;
                 }
 
             }else{
-                Users user = usersList.get(new Random().ints(0, usersList.size()).findFirst().getAsInt());
+                Users user = getUserRandom();
                 progressCall.add(user);
                 LOG.debug("Fin metodo validateOperatorsAvailable");
                 return user;
@@ -89,6 +95,15 @@ public class Dispatcher {
             LOG.error("error al buscar operador");
             return null;
         }
+
+    }
+    public Users getUserRandom(){
+        do{
+            if(usersList.isEmpty()){return null;}
+            user = usersList.get(new Random().ints(0, usersList.size()).findFirst().getAsInt());
+        }while (progressCall.stream().anyMatch(n -> n.getId()==user.getId()));
+        progressCall.add(user);
+        return user;
 
     }
 
